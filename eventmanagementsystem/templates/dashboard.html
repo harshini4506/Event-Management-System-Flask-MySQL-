@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        body {
+            background-image: url('{{ url_for("static", filename="EMS background.avif") }}');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 3.2em;
+            color: #ff4f81;
+            margin-top: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            max-width: 90%;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+        }
+
+        .buttons button {
+            background-color: #ff4f81;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            font-size: 1em;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            word-wrap: break-word;
+            white-space: normal;
+            text-align: center;
+        }
+
+        .buttons button:hover {
+            background-color: #ff2b61;
+            transform: scale(1.05);
+        }
+
+        h2 {
+            font-family: 'Brush Script MT', cursive;
+            color: #ff4f81;
+            margin: 20px 0 10px 0;
+            font-size: 2em;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        table {
+            width: 90%;
+            max-width: 1000px;
+            margin-bottom: 50px;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        table th, table td {
+            padding: 14px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #ff4f81;
+            color: white;
+            font-weight: bold;
+        }
+
+        table td {
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .buttons {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            table th, table td {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Event Management Dashboard</h1>
+
+    <div class="buttons">
+        {% for table in tables %}
+            <a href="/table/{{ table }}"><button>{{ table }}</button></a>
+        {% endfor %}
+    </div>
+
+    {% if selected_table %}
+        <h2>Data from {{ selected_table }}</h2>
+        <table>
+            <tr>
+                {% for col in columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in data %}
+                <tr>
+                    {% for item in row %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>

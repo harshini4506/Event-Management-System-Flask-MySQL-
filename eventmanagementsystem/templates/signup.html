@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Background image and general styling */
+        body {
+            background-image: url('{{ url_for("static", filename="EMS background.avif") }}');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            height: 100vh; /* Ensure full height coverage */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Darker transparent background for readability */
+            padding: 40px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        }
+
+        /* Main heading style */
+        h1 {
+            font-family: 'Brush Script MT', cursive; /* Handwriting font */
+            font-size: 3.5em;
+            color: #ff4f81; /* Vibrant pinkish-red color for the title */
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px; /* Spacing between the heading and the form */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for text to make it stand out */
+        }
+
+        .form-control {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn-success {
+            background-color: #ff4f81; /* Vibrant pinkish-red color for buttons */
+            border-color: #ff4f81;
+        }
+
+        .btn-success:hover {
+            background-color: #ff2b61;
+            border-color: #ff2b61;
+        }
+
+        .alert {
+            font-size: 1.2em;
+        }
+
+        .text-center p {
+            color: #ddd;
+        }
+
+        .text-warning {
+            color: #ff4f81 !important; /* Use the same pinkish-red for login link */
+        }
+
+        .alert-dismissible {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Signup</h1>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="/signup" class="mx-auto" style="max-width: 400px;">
+            <div class="mb-3">
+                <label>Name:</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Email:</label>
+                <input type="email" name="email" value="{{ prefill_email or '' }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Password:</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Signup</button>
+        </form>
+
+        <p class="text-center mt-3">Already have an account? <a href="/login" class="text-warning">Login here</a></p>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
